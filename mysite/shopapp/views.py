@@ -2,7 +2,7 @@ from timeit import default_timer
 from django.shortcuts import render
 from django.contrib.auth.models import Group
 
-from .models import Product
+from .models import Product, Order
 
 
 def shop_index(request):
@@ -23,6 +23,12 @@ def groups_list(request):
 
 def products_list(request):
     context = {
-        "products": Product.objects.all()
+        "products": Product.objects.all(),
     }
     return render(request, "shopapp/products-list.html", context=context)
+
+def orders_list(request):
+    context = {
+        "orders": Order.objects.select_related('user').prefetch_related('products').all(),
+    }
+    return render(request, "shopapp/orders-list.html", context=context)
