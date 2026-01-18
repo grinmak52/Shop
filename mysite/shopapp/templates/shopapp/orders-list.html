@@ -7,20 +7,12 @@
     {% if orders %}
     <div>
         {% for order in orders %}
-            <p>Order by {% firstof order.user.first_name order.user.username %}</p>
-            <p>Promocode: <code>{{ order.promocode }}</code></p>
-            <p>Delivery address: {{ order.delivery_address }}</p>
-        <div>
-            Products in order:
-        </div>
-        <ul>
-            {% for order in order.products.all %}
-                <li>{{ product.name }}for ${{ product.price }}</li>
-            {% endfor %}
-        </ul>
+            <p><a href={% url "shopapp:order_detail" pk=order.pk %}>Order by {% firstof order.user.first_name order.user.username %} # {{ order.pk }}</a></p>
         {% endfor %}
     </div>
     {% else %}
         <h3>No orders yet</h3>
     {% endif %}
+    <a href="{% url "shopapp:create_order" %}"
+    >Create</a>
 {% endblock body %}

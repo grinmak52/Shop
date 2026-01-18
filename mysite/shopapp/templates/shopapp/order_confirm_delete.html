@@ -1,0 +1,13 @@
+{% extends "shopapp/base.html" %}
+{% block title %}
+    Delete {{ object.name }}
+{% endblock %}
+{% block body %}
+    <h1>Confirm delete {{ object.name }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Delete</button>
+    </form>
+    <a href={% url "shopapp:order_detail" pk=object.pk %}>Back to order</a>
+{% endblock %}
